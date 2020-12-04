@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_breeds">
+
+    <activity
+        android:id="@+id/breedsActivity"
+        android:name="com.alexis.kuku.Breeds.BreedsActivity"
+        android:label="activity_breeds"
+        tools:layout="@layout/activity_breeds" />
+    <activity
+        android:id="@+id/brooding"
+        android:name="com.alexis.kuku.Brooding.BroodingActivity"
+        android:label="activity_brooding"
+        tools:layout="@layout/activity_brooding" />
+</navigation>
