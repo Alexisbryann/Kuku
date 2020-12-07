@@ -2,16 +2,19 @@ package com.alexis.kuku.MainActivity;
 
 import android.annotation.SuppressLint;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -35,6 +38,7 @@ import com.alexis.kuku.HousingAndEquipment.HousingAndEquipmentActivity;
 import com.alexis.kuku.PoultryHealthManagement.PoultryHealthManagementActivity;
 import com.alexis.kuku.PoultryManagement.PoultryManagementActivity;
 import com.alexis.kuku.R;
+import com.alexis.kuku.Utils;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.navigation.NavigationView;
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private AdRequest mAdRequest;
     private LinearLayoutManager mLinearLayoutManager;
     private ImageView mImg_toggle;
+    private View mNoInternetConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +71,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#013220"));
         mImg_toggle = findViewById(R.id.toggle_layout);
+        mNoInternetConnection = findViewById(R.id.no_internet);
 
-        Log.d(TAG,"Main toolbar");
+        Log.d(TAG, "Main toolbar");
 
 
         mDrawer = findViewById(R.id.drawer_layout);
@@ -86,7 +92,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAdRequest = new AdRequest.Builder().build();
         mAdView.loadAd(mAdRequest);
 
-        initializeDisplayContent();
+        // Check the internet connect
+        if (!Utils.checkAppConnectionStatus(MainActivity.this)){
+            // If do not have internet connection, set layout visible
+            Utils.setLayoutVisible(mNoInternetConnection);
+        }else{
+            // If have internet connection, set layout invisible
+//            Utils.setLayoutInvisible(mNoInternetConnection);}
+
+        initializeDisplayContent();}
     }
     @Override
     protected void onDestroy() {
@@ -103,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         updateNavHeader();
     }
     private void initializeDisplayContent() {
+
+
 
         DataManager.loadFromDatabase(mDbOpenHelper);
 
