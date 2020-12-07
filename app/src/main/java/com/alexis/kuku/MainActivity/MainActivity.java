@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private LinearLayoutManager mLinearLayoutManager;
     private ImageView mImg_toggle;
     private View mNoInternetConnection;
+    private Button mRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar.setTitleTextColor(Color.parseColor("#013220"));
         mImg_toggle = findViewById(R.id.toggle_layout);
         mNoInternetConnection = findViewById(R.id.no_internet);
+        mRefresh = findViewById(R.id.btn_refresh);
 
         Log.d(TAG, "Main toolbar");
-
 
         mDrawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,38 +90,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mDbOpenHelper = new DataBaseOpenHelper(this);
 
+        mRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkInternet();
+            }
+        });
+
+       checkInternet();
+       initialiseAd();
+//        initializeDisplayContent();
+    }
+
+    private void initialiseAd() {
         mAdView = findViewById(R.id.adView);
         mAdRequest = new AdRequest.Builder().build();
         mAdView.loadAd(mAdRequest);
+    }
 
+    private void checkInternet() {
         // Check the internet connect
         if (!Utils.checkAppConnectionStatus(MainActivity.this)){
             // If do not have internet connection, set layout visible
             Utils.setLayoutVisible(mNoInternetConnection);
+
         }else{
             // If have internet connection, set layout invisible
-//            Utils.setLayoutInvisible(mNoInternetConnection);}
+            Utils.setLayoutInvisible(mNoInternetConnection);
 
-        initializeDisplayContent();}
+            initializeDisplayContent();
+            initialiseAd();
+        }
     }
     @Override
     protected void onDestroy() {
         mDbOpenHelper.close();
         super.onDestroy();
     }
-    @Override
+//    @Override
     protected void onResume() {
         super.onResume();
-        mMainActivityRecyclerAdapter.notifyDataSetChanged();
-        getLoaderManager().restartLoader(LOADER_MAIN, null, this);
-
-        mDrawer.closeDrawer(GravityCompat.START);
-        updateNavHeader();
+//
+//        mMainActivityRecyclerAdapter.notifyDataSetChanged();
+//        getLoaderManager().restartLoader(LOADER_MAIN, null, this);
+//
+        checkInternet();
+//        mDrawer.closeDrawer(GravityCompat.START);
     }
+
     private void initializeDisplayContent() {
 
-
-
+//        mMainActivityRecyclerAdapter.notifyDataSetChanged();
+        getLoaderManager().restartLoader(LOADER_MAIN, null, this);
         DataManager.loadFromDatabase(mDbOpenHelper);
 
         mRecyclerItems = findViewById(R.id.list_main);
@@ -163,9 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
-    }
-    private void updateNavHeader() {
-
+        checkInternet();
     }
     @SuppressLint("StaticFieldLeak")
     @Override

@@ -72,5 +72,6 @@
     <string name="premium_app">Buy app &amp; remove ads</string>
     <string name="get_more">GET MORE</string>
     <string name="app_navigation">APP NAVIGATION</string>
-    <string name="error_no_internet_connection">Error: No internet connection!</string>
+    <string name="error_no_internet_connection">Error: No internet connection! kindly turn on your internet and refresh.</string>
+    <string name="refresh">refresh</string>
 </resources>

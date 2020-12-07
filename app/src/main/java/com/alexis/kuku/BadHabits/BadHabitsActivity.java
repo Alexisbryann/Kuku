@@ -11,7 +11,9 @@ import android.app.LoaderManager;
 import com.alexis.kuku.Database.DataBaseContract;
 import com.alexis.kuku.Database.DataBaseOpenHelper;
 import com.alexis.kuku.Database.DataManager;
+import com.alexis.kuku.MainActivity.MainActivity;
 import com.alexis.kuku.R;
+import com.alexis.kuku.Utils;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.navigation.NavigationView;
@@ -27,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
+import android.view.View;
 
 import static com.alexis.kuku.Database.DataBaseContract.*;
 
@@ -37,11 +40,14 @@ public class BadHabitsActivity extends AppCompatActivity implements LoaderManage
     private RecyclerView mRecyclerBadHabits;
     private LinearLayoutManager mLayoutManagerBadHabits;
     private BadHabitsRecyclerAdapter mBadHabitsRecyclerAdapter;
+    private View mNoInternetConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_bad_habits);
+
+        mNoInternetConnection = findViewById(R.id.no_internet);
 
         mDbOpenHelper = new DataBaseOpenHelper(this);
 
@@ -58,7 +64,6 @@ public class BadHabitsActivity extends AppCompatActivity implements LoaderManage
         super.onResume();
         mBadHabitsRecyclerAdapter.notifyDataSetChanged();
         getLoaderManager().restartLoader(LOADER_BAD_HABITS, null, this);
-
     }
 
     private void initializeDisplayContent() {
@@ -74,6 +79,25 @@ public class BadHabitsActivity extends AppCompatActivity implements LoaderManage
     mRecyclerBadHabits.setLayoutManager(mLayoutManagerBadHabits);
     mRecyclerBadHabits.setAdapter(mBadHabitsRecyclerAdapter);
     }
+
+    private void checkInternet() {
+        // Check the internet connect
+        if (!Utils.checkAppConnectionStatus(BadHabitsActivity.this)){
+            // If do not have internet connection, set layout visible
+            Utils.setLayoutVisible(mNoInternetConnection);
+
+        }else{
+            // If have internet connection, set layout invisible
+            Utils.setLayoutInvisible(mNoInternetConnection);
+
+            initializeDisplayContent();
+        }
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        checkInternet();
+//    }
 
     @SuppressLint("StaticFieldLeak")
     @Override
