@@ -69,5 +69,8 @@
     <string name="toggle">toggle</string>
     <string name="grid">grid</string>
     <string name="About">About</string>
-    <string name="premium_app">Premium app</string>
+    <string name="premium_app">Buy app &amp; remove ads</string>
+    <string name="get_more">GET MORE</string>
+    <string name="app_navigation">APP NAVIGATION</string>
+    <string name="error_no_internet_connection">Error: No internet connection!</string>
 </resources>
