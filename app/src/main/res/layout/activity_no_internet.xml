@@ -23,14 +23,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="@color/colorTeal"
+        android:backgroundTint="@color/colorTeal"
         android:text="@string/refresh"
+        app:cornerRadius="2dp"
         app:layout_constraintEnd_toEndOf="@+id/no_internet_connection_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/no_internet_connection_text" />
+        app:layout_constraintTop_toBottomOf="@+id/no_internet_connection_text"
+        app:rippleColor="@color/colorGreen"
+        app:strokeColor="@color/colorAccent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
