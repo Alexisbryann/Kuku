@@ -14,14 +14,15 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
         android:text="@string/error_no_internet_connection"
         android:textColor="@color/design_default_color_error"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_refresh"
@@ -30,10 +31,21 @@
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/colorTeal"
         android:text="@string/refresh"
+        android:textSize="20sp"
         app:cornerRadius="2dp"
         app:layout_constraintEnd_toEndOf="@+id/no_internet_connection_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/no_internet_connection_text"
         app:rippleColor="@color/colorGreen"
         app:strokeColor="@color/colorAccent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/error_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/caution" />
 </androidx.constraintlayout.widget.ConstraintLayout>
